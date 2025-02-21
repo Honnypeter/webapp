@@ -1,0 +1,91 @@
+AWS_IoT_DataLake_Architecture:
+  IoT_Devices:
+    - Sensors
+    - Edge_Devices
+    - External_Networks
+    -> IoT_Core:
+        Security:
+          - Device_Certificates (X.509)
+          - TLS/SSL Encryption
+          - IAM Policies and Roles
+        Data_Streams:
+          - MQTT
+          - HTTP/HTTPS
+
+  Data_Ingestion_Layer:
+    - Kinesis_Data_Streams:
+        Use_Case: "Real-time Data Streaming"
+        Security:
+          - KMS Encryption
+          - VPC Endpoints
+    - AWS_IoT_Analytics:
+        Use_Case: "Process and Store IoT Data"
+        Security:
+          - IAM Role-Based Access
+
+  Data_Lake_Storage_Layer:
+    - S3_Data_Lake_Bucket:
+        Security:
+          - S3 Bucket Policies
+          - IAM Roles for Controlled Access
+          - Server-Side Encryption (SSE-KMS)
+    - Glue_Catalog:
+        Use_Case: "Metadata Management and Data Cataloging"
+        Security:
+          - Fine-Grained IAM Policies
+    - AWS_Lambda:
+        Use_Case: "ETL and Data Transformation"
+        Security:
+          - IAM Roles with Limited Permissions
+
+  Data_Processing_and_Streaming:
+    - Kinesis_Firehose:
+        Use_Case: "Stream Data to S3"
+        Security:
+          - Encryption with KMS
+    - Glue_ETL_Job:
+        Use_Case: "Transform Raw Data into Refined Data"
+        Security:
+          - Glue IAM Role with Catalog Access
+
+  Monitoring_and_Visualization:
+    - Amazon_Managed_Grafana:
+        Use_Case: "Visualize Metrics and Dashboards"
+        Security:
+          - IAM Integration for Access Control
+          - TLS Encryption
+    - CloudWatch (Logs and Metrics):
+        Use_Case: "Monitoring IoT Devices and Data Pipelines"
+        Security:
+          - CloudWatch Alarms for Anomalies
+          - IAM Policies for Access Control
+
+  Data_Exposure_Endpoints:
+    - API_Gateway:
+        Use_Case: "Expose Data as API Endpoints"
+        Security:
+          - TLS/SSL (HTTPS)
+          - OAuth 2.0 / JWT for Authentication
+    - EC2_Instance:
+        Use_Case: "Custom Application to Visualize Data"
+        Security:
+          - Security Groups and IAM Roles
+          - SSH Access with Key Pairs
+
+  Automation_and_Security:
+    - CloudFormation:
+        Use_Case: "Infrastructure as Code (IaC) for Automation"
+    - IAM (Identity and Access Management):
+        Use_Case: "Role-Based Access Control"
+        Security: 
+          - MFA (Multi-Factor Authentication)
+    - KMS (Key Management Service):
+        Use_Case: "Manage Encryption Keys"
+    - VPC (Virtual Private Cloud):
+        Security:
+          - PrivateLink for Private Communication
+          - Security Groups and NACLs (Network ACLs)
+    - GuardDuty:
+        Use_Case: "Threat Detection and Security Monitoring"
+    - AWS_Shield:
+        Use_Case: "DDoS Protection"
